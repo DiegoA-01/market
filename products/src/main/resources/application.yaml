@@ -29,4 +29,3 @@ security:
   jwt:
     secret-key: KbxS8lDhMo0VSJRGwVKgKFe5zJJaiEWx2E9/+X9nXCE=
     token-expiration: 60000
-     
