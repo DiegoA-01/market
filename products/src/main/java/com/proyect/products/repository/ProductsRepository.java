@@ -6,4 +6,5 @@ import com.proyect.products.entity.Products;
 
 public interface ProductsRepository extends JpaRepository<Products, Long> {
     
+    boolean exiexistsByName(String name);
 }

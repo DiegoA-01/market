@@ -16,8 +16,18 @@ import lombok.RequiredArgsConstructor;
 public class ProductsService {
     
     ProductsRepository productsRepository;
-
+    
+    /**
+     * Metodo para crear producto
+     * 
+     * @param request
+     * @return
+     */
     public ProductsResponseDTO createProduct(ProductsRequestDTO request){
+
+        if (productsRepository.exiexistsByName(request.getName())) {
+            throw new RuntimeException("El nombre del producto ya existe.");
+        }
         Products products = new Products();
         
         products.setName(request.getName());
@@ -30,15 +40,34 @@ public class ProductsService {
         return toResponse(saveProducts);
     }
 
+    /**
+     * Metodo para Listar un producto
+     * 
+     * @return Lista
+     */
     public List<ProductsResponseDTO> listProducts(){
         return productsRepository.findAll().stream().map(this::toResponse).toList();
     }
 
+    /**
+     * Metodo para buscar por id 
+     * 
+     * @param productId
+     * @return
+     */
     public ProductsResponseDTO showId(Long productId){
         Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Usuario no encontrado. "));
         return toResponse(products);
     }
 
+
+    /**
+     * Metodo para actualizar producto
+     * 
+     * @param productId
+     * @param request
+     * @return
+     */
     public ProductsResponseDTO putProducts(Long productId, ProductsRequestDTO request){
         Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Usuario no encontrado. "));
         
@@ -52,11 +81,23 @@ public class ProductsService {
         return toResponse(productSave);
     }
 
+
+    /**
+     * Metodo de eliminar por id
+     * 
+     * @param productId
+     */
     public void deleteProductId(Long productId){
         productsRepository.findById(productId);
     }
 
 
+    /**
+     * Metodo de respuesta para reducir codigo.
+     * 
+     * @param products
+     * @return
+     */
     public ProductsResponseDTO toResponse(Products products){
         return ProductsResponseDTO.builder()
                 .productId(products.getProductId())
