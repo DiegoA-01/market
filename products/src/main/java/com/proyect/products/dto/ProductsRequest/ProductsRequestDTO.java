@@ -3,6 +3,7 @@ package com.proyect.products.dto.ProductsRequest;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,11 +29,11 @@ public class ProductsRequestDTO {
     @Size(max = 100)
     private String description;
 
-    @NotBlank(message = "debe ingresar el precio.")
+    @NotNull(message = "debe ingresar el precio.")
     @Column(name = "price")
     private double price;
 
-    @NotBlank(message = "El stock no puede ir vacio")
+    @NotNull(message = "El stock no puede ir vacio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     @Column(name = "stock")
     private int stock;

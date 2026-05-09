@@ -2,6 +2,7 @@ package com.proyect.products.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ProductsService {
-    
+    @Autowired
     ProductsRepository productsRepository;
     
     /**

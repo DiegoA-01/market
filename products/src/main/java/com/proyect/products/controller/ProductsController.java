@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/Products")
+@RequestMapping("/products")
 public class ProductsController {
     @Autowired
     ProductsService productsService;
@@ -36,17 +36,17 @@ public class ProductsController {
         return productsService.listProducts();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{productId}")
     public ProductsResponseDTO showId(@Valid @PathVariable Long productId){
         return productsService.showId(productId);
     }
 
-    @PutMapping("/{id}")
-    public ProductsResponseDTO putProducts(@Valid @PathVariable Long productId, ProductsRequestDTO request){
+    @PutMapping("/{productId}")
+    public ProductsResponseDTO putProducts(@PathVariable Long productId, @Valid @RequestBody ProductsRequestDTO request){
         return productsService.putProducts(productId, request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{productId}")
     public ResponseEntity<DeleteProductsDTO> deleteProductId(@PathVariable Long productId){
         return ResponseEntity.ok(productsService.deleteProductId(productId));
     }
