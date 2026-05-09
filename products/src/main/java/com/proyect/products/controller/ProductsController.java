@@ -16,10 +16,12 @@ import com.proyect.products.dto.ProductsResponseDTO.ProductsResponseDTO;
 import com.proyect.products.service.ProductsService;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/Products")
 public class ProductsController {
+    @Autowired
     ProductsService productsService;
 
     @PostMapping

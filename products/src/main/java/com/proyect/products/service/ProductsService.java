@@ -25,7 +25,7 @@ public class ProductsService {
      */
     public ProductsResponseDTO createProduct(ProductsRequestDTO request){
 
-        if (productsRepository.exiexistsByName(request.getName())) {
+        if (productsRepository.existsByName(request.getName())) {
             throw new RuntimeException("El nombre del producto ya existe.");
         }
         Products products = new Products();
@@ -88,7 +88,8 @@ public class ProductsService {
      * @param productId
      */
     public void deleteProductId(Long productId){
-        productsRepository.findById(productId);
+        productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Uusario no encontrado."));
+        productsRepository.deleteById(productId);
     }
 
 
