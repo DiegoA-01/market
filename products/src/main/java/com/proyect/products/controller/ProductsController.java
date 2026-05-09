@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
+import com.proyect.products.dto.ProductsResponseDTO.DeleteProductsDTO;
 import com.proyect.products.dto.ProductsResponseDTO.ProductsResponseDTO;
 import com.proyect.products.service.ProductsService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/Products")
@@ -45,7 +47,7 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProductId(@Valid @PathVariable Long productId){
-        productsService.deleteProductId(productId);
+    public ResponseEntity<DeleteProductsDTO> deleteProductId(@PathVariable Long productId){
+        return ResponseEntity.ok(productsService.deleteProductId(productId));
     }
 }

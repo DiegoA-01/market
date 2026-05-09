@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
+import com.proyect.products.dto.ProductsResponseDTO.DeleteProductsDTO;
 import com.proyect.products.dto.ProductsResponseDTO.ProductsResponseDTO;
 import com.proyect.products.entity.Products;
 import com.proyect.products.repository.ProductsRepository;
@@ -87,9 +88,12 @@ public class ProductsService {
      * 
      * @param productId
      */
-    public void deleteProductId(Long productId){
+    public DeleteProductsDTO deleteProductId(Long productId){
         productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Uusario no encontrado."));
         productsRepository.deleteById(productId);
+        return DeleteProductsDTO.builder()
+                .message("Producto eliminado correctamente.")
+                .build();
     }
 
 
