@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,16 +31,22 @@ public class usersEntity {
   @Column(name = "user_id")
   private long userId;
 
-  @NotBlank
+  @NotBlank(message = "Name is required")
+  @Size(max = 100)
   @Column(name ="name")
   private String name;
 
+  @NotBlank(message = "This field is required")
+  @Size(max = 100)
   @Column(name = "username")
   private String userName;
 
+  @NotBlank(message = "Password is required")
+  @Size(max = 100)
   @Column(name = "password")
   private String password;
 
+  @NotBlank(message = "Rol is required")
   @Column(name = "rol")
   private String rol;
 
