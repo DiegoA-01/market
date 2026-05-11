@@ -35,7 +35,7 @@ public class JwtService {
      * Tiempo de expiracion de token en millisegundos 
      */
     @Value("${security.jwt.expiration}")
-    private String expiration;
+    private Long expiration;
 
     /**
      * Genera la firma secreta apartir del secretKey en el yaml
@@ -55,11 +55,14 @@ public class JwtService {
      * @return
      */
     public String generatedToken(Users users){
+        Date now = new Date();
+        Date expirationDate = new Date(System.currentTimeMillis() + expiration);
+        
         return Jwts.builder()
                 .claims(Map.of("userId", users.getUserId(), "rol", users.getRol()))
                 .subject(users.getEmail())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .issuedAt(now)
+                .expiration(expirationDate)
                 .signWith(getSigninKey())
                 .compact();
                 
