@@ -12,12 +12,14 @@ import com.proyect.products.repository.UsersRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
 public class UsersService {
     @Autowired
     UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Metodo de crear
@@ -38,7 +40,7 @@ public class UsersService {
         
         users.setName(request.getName());
         users.setEmail(request.getEmail());
-        users.setPassword(request.getPassword());
+        users.setPassword(passwordEncoder.encode(request.getPassword()) );
         users.setPhone(request.getPhone());
         users.setRol(request.getRol());
 

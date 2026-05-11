@@ -52,7 +52,4 @@ public class Users {
     @Column(name = "role")
     private Rol rol;
 
-
-
-
 }

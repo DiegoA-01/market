@@ -25,4 +25,7 @@ logging:
   level:
     "[org.springframework]": INFO
 
-
+security:
+  jwt:
+    secret-key: J5sw08OFYGPCkQ184qoSSXCxOO7ou8LWDXcVz56+hac=
+    expiration: 6000000
