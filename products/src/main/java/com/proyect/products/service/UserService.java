@@ -62,6 +62,13 @@ public class UserService {
     return toResponse(users);
   }
 
+  /**
+   * Methos to update user
+   * 
+   * @param userId
+   * @param request
+   * @return
+   */
   public UserResponseDTO putUser(Long userId, UserRequestDTO request) {
     UserEntity users = UserRepository.findById(userId).orElseThrow(()-> new RuntimeException("User update"));
 
@@ -74,5 +81,31 @@ public class UserService {
     UserEntity userSave = userRepository.save(users);
 
     return toResponse(userSave);
+  }
+
+  /**
+   * Method to delete by id.
+   * 
+   * @param userId
+   */
+  public void deleteUserById(Long userId) {
+    userRepository.findById(userId);
+  }
+
+  /**
+   * Method for reducing code.
+   * 
+   * @param user
+   * @return
+   */
+  public UserResponseDTO toResponse(UserEntity user) {
+    return UserResponseDTO.builder()
+            .userId(user.getUserId())
+            .name(user.getName())
+            .email(user.getEmail())
+            .password(user.getPassword())
+            .phone(user.getPhone())
+            .role(user.getRole())
+            .build();
   }
 }
