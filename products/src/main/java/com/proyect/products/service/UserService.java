@@ -17,6 +17,8 @@ public class UserService {
 
   UserRepository userRepository;
 
+  // is important to fix crate user, beacause is not byEmail is byId 
+
   /**
    * Method to create user
    * 
