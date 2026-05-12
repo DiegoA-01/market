@@ -1,4 +1,5 @@
-package com.proyect.products.dto.ProductsRequest;
+package com.proyect.products.dto.RequestDTO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductsRequestDTO {
+public class UsersRequestDTO {
 
     private String name;
-    private String description;
-    private double price;
-    private int stock;
+    private String email;
+    private String password;
+    private String phone;
+    private String rol;
+
+
 }

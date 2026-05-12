@@ -3,9 +3,9 @@ spring:
     name: products
 
   datasource:
-    url: jdbc:mysql://localhost:3306/products
+    url: jdbc:mysql://localhost:3306/market
     username: root
-    password: Di1004960034.
+    password: 1005367136md
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -29,4 +29,4 @@ security:
   jwt:
     secret-key: KbxS8lDhMo0VSJRGwVKgKFe5zJJaiEWx2E9/+X9nXCE=
     token-expiration: 60000
-     
+

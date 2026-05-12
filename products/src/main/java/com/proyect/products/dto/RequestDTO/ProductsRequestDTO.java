@@ -1,7 +1,6 @@
-package com.proyect.products.dto.ProductsResponseDTO;
+package com.proyect.products.dto.RequestDTO;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProductsResponseDTO {
+public class ProductsRequestDTO {
 
-    private Long productId;
     private String name;
     private String description;
     private double price;

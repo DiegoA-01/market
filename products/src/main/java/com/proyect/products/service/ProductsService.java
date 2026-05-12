@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
-import com.proyect.products.dto.ProductsResponseDTO.ProductsResponseDTO;
+import com.proyect.products.dto.RequestDTO.ProductsRequestDTO;
+import com.proyect.products.dto.ResponseDTO.ProductsResponseDTO;
 import com.proyect.products.entity.Products;
 import com.proyect.products.repository.ProductsRepository;
 
@@ -25,7 +25,7 @@ public class ProductsService {
      */
     public ProductsResponseDTO createProduct(ProductsRequestDTO request){
 
-        if (productsRepository.exiexistsByName(request.getName())) {
+        if (productsRepository.existsByName(request.getName())) {
             throw new RuntimeException("El nombre del producto ya existe.");
         }
         Products products = new Products();

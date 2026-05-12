@@ -1,0 +1,83 @@
+package com.proyect.products.config;
+
+
+import org.springframework.stereotype.Service;
+
+import com.proyect.products.entity.Rol;
+import com.proyect.products.entity.Users;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.proyect.products.dto.ResponseDTO.RefreshTokenResponseDTO;
+import com.proyect.products.dto.RequestDTO.LoginRequestDTO;
+import com.proyect.products.dto.RequestDTO.RegisterRequestDTO;
+import com.proyect.products.dto.ResponseDTO.LoginResponseDTO;
+import com.proyect.products.dto.ResponseDTO.MessageResponseDTO;
+import com.proyect.products.repository.UsersRepository; 
+import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
+
+    private final UsersRepository userRepository;
+
+
+    public MessageResponseDTO register(RegisterRequestDTO request){
+        MessageResponseDTO response = new MessageResponseDTO();
+        response.setMessage("Registration successful");
+
+        if(userRepository.findByEmail(request.getEmail()).isPresent()){
+            throw new RuntimeException("Email already exists");
+    }
+
+    Users user = new Users();
+
+    user.setEmail(request.getEmail());
+    user.setName(request.getName());
+    user.setPhone(request.getPhone());
+    user.setPassword(passwordEncoder.encode(request.getPassword()));
+    user.setRol(Rol.valueOf(request.getRol().toUpperCase()));
+
+    userRepository.save(user);
+    return response;
+}
+
+public LoginResponseDTO login(LoginRequestDTO request){
+    LoginResponseDTO response = new LoginResponseDTO();
+    Optional<Users> userOpt = userRepository.findByEmail(request.getEmail());
+
+    if (userOpt.isEmpty() && request.getEmail() != null){
+        response.setMessage("email invalido");
+        return response;
+    }
+
+    Users userFound = userOpt.get();
+
+    if(!passwordEncoder.matches(request.getPassword(), userFound.getPassword())){
+        response.setMessage("contraseña incorrecta");
+        return response;
+    }
+
+    String jwt = jwtService.generateToken(userFound);
+    response.setJwt(jwt);
+    response.setMessage("Login successful");
+    return response;
+
+}
+
+public RefreshTokenResponseDTO refreshToken(String token)throws Exception{
+    
+    String jwt = jwtService.refreshToken(token);
+    RefreshTokenResponseDTO response = new RefreshTokenResponseDTO();
+    response.setJwt(jwt);
+    response.setMessage("Token refreshed successfully");
+    return response;
+}
+
+}
