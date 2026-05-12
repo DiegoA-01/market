@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.math.BigDecimal;
 
 @Data
 @Getter
@@ -18,6 +19,6 @@ public class ProductsResponseDTO {
     private Long productId;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private int stock;
 }

@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -44,8 +45,8 @@ public class Products {
     private String description;
 
     @NotNull(message = "debe ingresar el precio.")
-    @Column(name = "price")
-    private double price;
+    @Column(name = "price", precision = 19, scale = 2)
+    private BigDecimal price;
 
     @NotNull(message = "El stock no puede ir vacio")
     @Min(value = 0, message = "El stock no puede ser negativo")

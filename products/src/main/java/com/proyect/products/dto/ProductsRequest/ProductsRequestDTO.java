@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ public class ProductsRequestDTO {
 
     @NotNull(message = "debe ingresar el precio.")
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
     @NotNull(message = "El stock no puede ir vacio")
     @Min(value = 0, message = "El stock no puede ser negativo")
