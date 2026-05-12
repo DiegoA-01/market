@@ -11,14 +11,12 @@ import com.proyect.products.entity.Users;
 import com.proyect.products.repository.UsersRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
 public class UsersService {
-    @Autowired
-    UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
     /**

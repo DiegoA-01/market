@@ -26,7 +26,7 @@ public class AuthService {
         MenssageResponseDTO response = new MenssageResponseDTO();
 
         response.setMenssage("Registro exitoso");
-        if (usersRepository.finByEMail(register.getEmail()).isPresent()) {
+        if (usersRepository.findByEmail(register.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya existe intenta con otro");
         }
         Users users = new Users();
@@ -43,7 +43,7 @@ public class AuthService {
     public LoginResponseDTO login(LoginRequestDTO request){
         LoginResponseDTO response = new LoginResponseDTO();
 
-        Optional<Users> userOpt = usersRepository.finByEMail(request.getEmail());
+        Optional<Users> userOpt = usersRepository.findByEmail(request.getEmail());
         if (userOpt.isEmpty() && request.getEmail() != null) {
             response.setMessage("El usuario ya se encuentra registrado");
             return response;

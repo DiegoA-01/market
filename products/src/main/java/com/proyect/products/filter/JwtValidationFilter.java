@@ -19,7 +19,7 @@ public class JwtValidationFilter extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException{
-        String autHeader = request.getHeader("Autorization");
+        String autHeader = request.getHeader("Authorization");
 
         if(autHeader == null || !autHeader.startsWith("Bearer")){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

@@ -1,8 +1,10 @@
 package com.proyect.products.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +29,9 @@ public class UsersController {
     UsersService usersService;
 
     @PostMapping
-    public UsersResponseDTO createUser(@Valid @RequestBody UsersRequestDTO request){
-        return usersService.createUser(request);
+    public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request){
+        usersService.createUser(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Usuario Creado exitosamente"));
     }
 
     @GetMapping
