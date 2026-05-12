@@ -3,9 +3,9 @@ package com.proyect.products.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
+
 import com.proyect.products.dto.ProductsRequest.UserRequestDTO;
-import com.proyect.products.dto.ProductsResponseDTO.ProductsResponseDTO;
+
 import com.proyect.products.dto.ProductsResponseDTO.UserResponseDTO;
 import com.proyect.products.service.UserService;
 
