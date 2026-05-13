@@ -9,8 +9,8 @@ import com.proyect.products.entity.UserEntity;
 
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-  
-  Boolean existByEmail(String email);
+
+  boolean existsByEmail(String email);
 
   Optional<UserEntity> findByEmail(String email);
 }

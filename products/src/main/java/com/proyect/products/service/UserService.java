@@ -27,7 +27,7 @@ public class UserService {
    */
   public UserResponseDTO createUser(UserRequestDTO request) {
 
-    if (UserRepository.existByEmail(request.getEmail())) {
+    if (userRepository.existsByEmail(request.getEmail())) {
       throw new RuntimeException("This user already exist.");
     }
 
@@ -72,7 +72,7 @@ public class UserService {
    * @return
    */
   public UserResponseDTO putUser(Long userId, UserRequestDTO request) {
-    UserEntity users = UserRepository.findById(userId).orElseThrow(()-> new RuntimeException("User update"));
+    UserEntity users = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User update"));
 
     users.setName(request.getName());
     users.setEmail(request.getEmail());
