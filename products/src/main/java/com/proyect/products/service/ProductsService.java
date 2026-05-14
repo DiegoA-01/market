@@ -2,9 +2,11 @@ package com.proyect.products.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyect.products.dto.RequestDTO.ProductsRequestDTO;
+import com.proyect.products.dto.ResponseDTO.DeleteProductsDTO;
 import com.proyect.products.dto.ResponseDTO.ProductsResponseDTO;
 import com.proyect.products.entity.Products;
 import com.proyect.products.repository.ProductsRepository;
@@ -14,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ProductsService {
-    
+    @Autowired
     ProductsRepository productsRepository;
     
     /**
@@ -69,7 +71,7 @@ public class ProductsService {
      * @return
      */
     public ProductsResponseDTO putProducts(Long productId, ProductsRequestDTO request){
-        Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Usuario no encontrado. "));
+        Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Producto no encontrado. "));
         
         products.setName(request.getName());
         products.setDescription(request.getDescription());
@@ -87,8 +89,12 @@ public class ProductsService {
      * 
      * @param productId
      */
-    public void deleteProductId(Long productId){
-        productsRepository.findById(productId);
+    public DeleteProductsDTO deleteProductId(Long productId){
+        productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Uusario no encontrado."));
+        productsRepository.deleteById(productId);
+        return DeleteProductsDTO.builder()
+                .message("Producto eliminado correctamente.")
+                .build();
     }
 
 

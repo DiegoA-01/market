@@ -12,38 +12,69 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.products.dto.RequestDTO.ProductsRequestDTO;
+import com.proyect.products.dto.ResponseDTO.DeleteProductsDTO;
+import com.proyect.products.dto.ResponseDTO.MessageResponseDTO;
 import com.proyect.products.dto.ResponseDTO.ProductsResponseDTO;
+import com.proyect.products.service.PermissionService;
 import com.proyect.products.service.ProductsService;
+import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/Products")
+@RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductsController {
+    @Autowired
     ProductsService productsService;
+    private final PermissionService permissionService;
 
-    @PostMapping
-    public ProductsResponseDTO createProduct(@Valid @RequestBody ProductsRequestDTO request){
-        return productsService.createProduct(request);
+
+    @PostMapping("/secure")
+    public ResponseEntity<?> createProduct(HttpServletRequest request, @RequestBody ProductsRequestDTO productsRequestDTO){
+        String rol = (String) request.getAttribute("rol");
+        permissionService.checkAdmin(rol);
+
+        productsService.createProduct(productsRequestDTO);
+        return ResponseEntity.ok(new MessageResponseDTO("Producto creado"));
     }
 
     @GetMapping
-    public List<ProductsResponseDTO> listProducts(){
+    public List<ProductsResponseDTO> listProducts(HttpServletRequest httpRequest){
+        String rol =(String) httpRequest.getAttribute ("rol");
+        permissionService.checkAdminOrCashier(rol);
         return productsService.listProducts();
     }
 
-    @GetMapping("/{id}")
-    public ProductsResponseDTO showId(@Valid @PathVariable Long productId){
+    @GetMapping("/{productId}")
+    public ProductsResponseDTO showId(@Valid @PathVariable Long productId,HttpServletRequest httpRequest){
+        String rol = (String) httpRequest.getAttribute("rol");
+        permissionService.checkAdminOrCashier(rol);
         return productsService.showId(productId);
     }
 
-    @PutMapping("/{id}")
-    public ProductsResponseDTO putProducts(@Valid @PathVariable Long productId, ProductsRequestDTO request){
-        return productsService.putProducts(productId, request);
+    @PutMapping("/update")
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductsRequestDTO request,HttpServletRequest httpRequest){
+
+    String rol = (String) httpRequest.getAttribute("rol");
+    permissionService.checkAdmin(rol);
+
+    ProductsResponseDTO updated = productsService.putProducts(id,request);
+    return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProductId(@Valid @PathVariable Long productId){
-        productsService.deleteProductId(productId);
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long productId, @Valid @RequestBody ProductsRequestDTO productsRequestDTO,HttpServletRequest httpsRequest){
+        String rol = (String) httpsRequest.getAttribute("rol");
+        permissionService.checkAdmin(rol);
+
+        DeleteProductsDTO deleted = productsService.deleteProductId(productId);
+        return ResponseEntity.ok(deleted);
+
+    
     }
 }

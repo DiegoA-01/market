@@ -42,7 +42,7 @@ public class AuthService {
     user.setName(request.getName());
     user.setPhone(request.getPhone());
     user.setPassword(passwordEncoder.encode(request.getPassword()));
-    user.setRol(Rol.valueOf(request.getRol().toUpperCase()));
+    user.setRol(Rol.valueOf(request.getRol().toString().toUpperCase()));
 
     userRepository.save(user);
     return response;
@@ -52,7 +52,7 @@ public LoginResponseDTO login(LoginRequestDTO request){
     LoginResponseDTO response = new LoginResponseDTO();
     Optional<Users> userOpt = userRepository.findByEmail(request.getEmail());
 
-    if (userOpt.isEmpty() && request.getEmail() != null){
+    if (userOpt.isEmpty() || request.getEmail() == null){
         response.setMessage("email invalido");
         return response;
     }
@@ -64,10 +64,10 @@ public LoginResponseDTO login(LoginRequestDTO request){
         return response;
     }
 
-    String jwt = jwtService.generateToken(userFound);
+    String jwt = jwtService.generatedToken(userFound);
     response.setJwt(jwt);
     response.setMessage("Login successful");
-    return response;
+    return new LoginResponseDTO(jwt, "Login successful");
 
 }
 

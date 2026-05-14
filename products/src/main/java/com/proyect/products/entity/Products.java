@@ -8,8 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "products")
 public class Products {
     
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
@@ -41,11 +44,11 @@ public class Products {
     @Size(max = 100)
     private String description;
 
-    @NotBlank(message = "debe ingresar el precio.")
-    @Column(name = "price")
-    private double price;
+    @NotNull(message = "debe ingresar el precio.")
+    @Column(name = "price", precision = 19, scale = 2)
+    private BigDecimal price;
 
-    @NotBlank(message = "El stock no puede ir vacio")
+    @NotNull(message = "El stock no puede ir vacio")
     @Min(value = 0, message = "El stock no puede ser negativo")
     @Column(name = "stock")
     private int stock;

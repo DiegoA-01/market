@@ -1,7 +1,6 @@
 package com.proyect.products.config;
 
 import org.springframework.web.bind.annotation.RestController;
-import com.proyect.products.config.AuthService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.proyect.products.dto.ResponseDTO.RefreshTokenResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 
 
@@ -29,16 +29,11 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<MessageResponseDTO> register(@RequestBody RegisterRequestDTO request) {
-        
-        try{
-            MessageResponseDTO response = authService.register(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new MessageResponseDTO( "Error en el registro, email ya registrado o datos invalidos"));
-        }
-    }
+public ResponseEntity<MessageResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
+    MessageResponseDTO response = authService.register(request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+}
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
