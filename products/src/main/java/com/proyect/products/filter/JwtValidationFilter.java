@@ -15,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class JwtValidationFilter extends OncePerRequestFilter{
+    /**
+     * Servicio para validar tokens JWT
+     */
     private final JwtService jwtService;
 
     @Override

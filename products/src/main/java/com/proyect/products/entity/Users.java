@@ -27,6 +27,9 @@ import lombok.Setter;
 @Table(name = "users")
 public class Users {
     
+    /**
+     * Entidad que representa un usuario en el sistema. Contiene los campos necesarios para definir un usuario, como el ID del usuario, el nombre, el correo electrónico, la contraseña, el número de teléfono y el rol del usuario. Esta entidad se utiliza para mapear la información de los usuarios en la base de datos y para realizar operaciones relacionadas con los usuarios en el sistema.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")

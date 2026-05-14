@@ -19,7 +19,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductsRequestDTO {
 
-    
+    /**
+     * DTO para la creación y actualización de productos. Contiene los campos necesarios para definir un producto, como el nombre, la descripción, el precio y el stock disponible. Este DTO se utiliza en las operaciones de creación y actualización de productos en el sistema.
+     */
     @NotBlank(message = "El nombre es obligatorio")
     @Size( max = 100)
     @Column(name = "name", unique = true)

@@ -28,6 +28,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "products")
 public class Products {
     
+    /**
+     * Entidad que representa un producto en el sistema. Contiene los campos necesarios para definir un producto, como el ID del producto, el nombre, la descripción, el precio y el stock disponible. Esta entidad se utiliza para mapear la información de los productos en la base de datos y para realizar operaciones relacionadas con los productos en el sistema.
+     */
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

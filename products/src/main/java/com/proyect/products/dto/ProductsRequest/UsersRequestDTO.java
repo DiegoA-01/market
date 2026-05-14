@@ -19,6 +19,9 @@ import lombok.Setter;
 @Setter
 public class UsersRequestDTO {
     
+    /**
+     * DTO para la creación y actualización de usuarios. Contiene los campos necesarios para definir un usuario, como el nombre, el correo electrónico, la contraseña, el número de teléfono y el rol del usuario. Este DTO se utiliza en las operaciones de creación y actualización de usuarios en el sistema.
+     */
     @NotBlank(message = "El nombre es obligatorio. ")
     @Column(name = "name")
     private String name;

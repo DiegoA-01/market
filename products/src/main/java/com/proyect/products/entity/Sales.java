@@ -22,6 +22,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "sale")
 public class Sales {
     
+    /**
+     * Entidad que representa una venta en el sistema. Contiene los campos necesarios para definir una venta, como el ID de la venta, la fecha de la venta, el subtotal, el total, la cantidad de productos vendidos, el usuario que realizó la venta y el producto vendido. Esta entidad se utiliza para mapear la información de las ventas en la base de datos y para realizar operaciones relacionadas con las ventas en el sistema.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_sale")

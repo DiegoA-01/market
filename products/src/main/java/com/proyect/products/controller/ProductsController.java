@@ -26,26 +26,56 @@ public class ProductsController {
     @Autowired
     ProductsService productsService;
 
+    /**
+     * Crea un nuevo producto. Recibe un objeto ProductsRequestDTO con los datos del producto a crear y devuelve un objeto ProductsResponseDTO con el resultado de la operación.
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping
     public ProductsResponseDTO createProduct(@Valid @RequestBody ProductsRequestDTO request){
         return productsService.createProduct(request);
     }
 
+    /**
+     * Lista todos los productos disponibles. Devuelve una lista de objetos ProductsResponseDTO con los datos de cada producto.
+     * 
+     * @return
+     */
     @GetMapping
     public List<ProductsResponseDTO> listProducts(){
         return productsService.listProducts();
     }
 
+    /**
+     * 
+     * 
+     * @param productId
+     * @return
+     */
     @GetMapping("/{productId}")
     public ProductsResponseDTO showId(@Valid @PathVariable Long productId){
         return productsService.showId(productId);
     }
 
+    /**
+     * Actualiza un producto existente. Recibe un objeto ProductsRequestDTO con los datos actualizados del producto y devuelve un objeto ProductsResponseDTO con el resultado de la operación.
+     * 
+     * @param productId
+     * @param request
+     * @return
+     */
     @PutMapping("/{productId}")
     public ProductsResponseDTO putProducts(@PathVariable Long productId, @Valid @RequestBody ProductsRequestDTO request){
         return productsService.putProducts(productId, request);
     }
 
+    /**
+     * Elimina un producto existente. Recibe el ID del producto a eliminar y devuelve un objeto DeleteProductsDTO con el resultado de la operación.
+     * 
+     * @param productId
+     * @return
+     */
     @DeleteMapping("/{productId}")
     public ResponseEntity<DeleteProductsDTO> deleteProductId(@PathVariable Long productId){
         return ResponseEntity.ok(productsService.deleteProductId(productId));

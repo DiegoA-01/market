@@ -28,27 +28,57 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
+    /**
+     * Crea un nuevo usuario. Recibe un objeto UsersRequestDTO con los datos del usuario a crear y devuelve un objeto UsersResponseDTO con el resultado de la operación.
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request){
         usersService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Usuario Creado exitosamente"));
     }
 
+    /**
+     * Lista todos los usuarios disponibles. Devuelve una lista de objetos UsersResponseDTO con los datos de cada usuario.
+     * 
+     * @return
+     */
     @GetMapping
     public List<UsersResponseDTO> listUsers(){
         return usersService.listUsers();
     }
 
+    /**
+     * Obtiene los detalles de un usuario específico. Recibe el ID del usuario a consultar y devuelve un objeto UsersResponseDTO con los datos del usuario correspondiente.
+     * 
+     * @param userId
+     * @return
+     */
     @GetMapping("/{userId}")
     public UsersResponseDTO showId(@Valid @PathVariable Long  userId){
         return usersService.showId(userId);
     }
 
+    /**
+     * Actualiza los datos de un usuario específico. Recibe el ID del usuario a actualizar y un objeto UsersRequestDTO con los nuevos datos.
+     * 
+     * @param userId
+     * @param request
+     * @return
+     */
     @PutMapping("/{userId}")
     public UsersResponseDTO updatedId(@PathVariable Long userId, @Valid @RequestBody UsersRequestDTO request){
         return usersService.updatedId(userId, request);
     }
 
+    /**
+     * Elimina un usuario específico. Recibe el ID del usuario a eliminar.
+     * 
+     * @param userId
+     * @return
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<DeleteUsersResponseDTO> deleteId(@PathVariable Long userId){
         return ResponseEntity.ok(usersService.deletedId(userId));

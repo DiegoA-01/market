@@ -21,6 +21,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "sale_detail")
 public class SalesDetail {
     
+    /**
+     * Entidad que representa un detalle de venta en el sistema. Contiene los campos necesarios para definir un detalle de venta, como el ID del detalle de venta, la cantidad de productos vendidos, el precio unitario, la venta a la que pertenece el detalle, el usuario que realizó la venta y el producto vendido. Esta entidad se utiliza para mapear la información de los detalles de venta en la base de datos y para realizar operaciones relacionadas con los detalles de venta en el sistema.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_sale_detail")

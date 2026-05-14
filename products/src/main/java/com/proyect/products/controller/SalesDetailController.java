@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyect.products.dto.SalesDetailRequest;
+import com.proyect.products.dto.ProductsRequest.SalesDetailRequest;
 import com.proyect.products.entity.SalesDetail;
 import com.proyect.products.service.SalesDetailService;
 
@@ -38,11 +38,22 @@ public class SalesDetailController {
         return ResponseEntity.ok(detail);
     }
 
+    /**
+     * Lista todos los detalles de venta disponibles.
+     * 
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<SalesDetail>> getAll(){
         return ResponseEntity.ok(salesDetailService.getAll());
     }
 
+    /**
+     * Obtiene todos los detalles de venta para una venta específica.
+     * 
+     * @param saleId
+     * @return
+     */
     @GetMapping("/sale/{saleId}")
     public ResponseEntity<List<SalesDetail>> getBySale(@PathVariable Long saleId){
         return ResponseEntity.ok(salesDetailService.getBySale(saleId));

@@ -22,12 +22,24 @@ public class AuthController {
     @Autowired
     private AuthService authService;
     
+    /**
+     * Registro de un nuevo usuario. Recibe un objeto RegisterRequestDTO con los datos del usuario a registrar y devuelve un MenssageResponseDTO con el resultado de la operación.
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping("/register")
     public ResponseEntity<MenssageResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         MenssageResponseDTO response = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
+    /**
+     * Inicio de sesión de un usuario. Recibe un objeto LoginRequestDTO con las credenciales del usuario y devuelve un LoginResponseDTO con el resultado de la operación, incluyendo un token JWT si el inicio de sesión es exitoso.
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         LoginResponseDTO response = authService.login(request);
