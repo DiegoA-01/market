@@ -5,6 +5,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.proyect.products.entity.UserEntity;
+
+import javax.crypto.SecretKey;
+
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -42,14 +47,14 @@ public class JwtService {
    * @param users
    * @return
    */
-  public String generatedToken(Users users) {
+  public String generatedToken(UserEntity user) {
     Date now = new Date();
     Date expirationDate = new Date(System.currentTimeMillis() + expiration);
 
     return Jwts.builder()
-            .claims(Map.of("userId", users.getUserId(), "role", users.getRole()))
-            .subject(users.getEmail())
-            .issueAt(now)
+            .claims(Map.of("userId", user.getUserId(), "role", user.getRole()))
+            .subject(user.getEmail())
+            .issuedAt(now)
             .expiration(expirationDate)
             .signWith(getSigninkey())
             .compact();
@@ -63,13 +68,16 @@ public class JwtService {
    */
   public Boolean validToken(String token) {
     try {
-      Jwts.parser().verifyWith(getSigninkey()).build().parseSignedClaims(toke);}
+      Jwts.parser().verifyWith(getSigninkey()).build().parseSignedClaims(token);
       return true;
-    } catch (JwtExeption e) {
+    } catch (JwtException e) {
         log.error("Invalid token " + e.getMessage());
         return false;
-    } catch (Exeption e) {
+    } catch (Exception e) {
         log.error("Error to validate token " + e.getMessage());
         return false;
     }
+  }
+
+  public <T> T extraClaims()
 }

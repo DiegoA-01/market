@@ -1,6 +1,7 @@
 package com.proyect.products.entity;
+import com.proyect.products.entity.UserEntity;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 import com.proyect.products.enums.Role;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
   
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id_user")
   private Long userId;
 
