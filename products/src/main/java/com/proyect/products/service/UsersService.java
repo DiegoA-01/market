@@ -3,6 +3,7 @@ package com.proyect.products.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.proyect.products.dto.ProductsRequest.UsersRequestDTO;
 import com.proyect.products.dto.ProductsResponseDTO.DeleteUsersResponseDTO;
@@ -12,6 +13,8 @@ import com.proyect.products.enums.Rol;
 import com.proyect.products.repository.UsersRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
@@ -29,10 +32,10 @@ public class UsersService {
     public UsersResponseDTO createUser(UsersRequestDTO request){
 
         if (usersRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("El correo ya existe, ingresa otro correo.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo ya existe, ingresa otro correo.");
         }
         if (usersRepository.existsByPhone(request.getPhone())) {
-            throw new RuntimeException("El numero ya existe.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El numero ya existe.");
         }
 
         Users users = new Users();
@@ -65,7 +68,7 @@ public class UsersService {
      * @return
      */
     public UsersResponseDTO showId(Long userId){
-        Users users = usersRepository.findById(userId).orElseThrow(()->new RuntimeException("Usuario no encontrado."));
+        Users users = usersRepository.findById(userId).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado."));
         return toResponse(users);
     }
 
@@ -78,7 +81,7 @@ public class UsersService {
      * @return
      */
     public UsersResponseDTO updatedId(Long userId, UsersRequestDTO request){
-        Users users = usersRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado."));
+        Users users = usersRepository.findById(userId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado."));
         
         users.setName(request.getName());
         users.setEmail(request.getEmail());
@@ -97,7 +100,7 @@ public class UsersService {
      * @param userId
      */
     public DeleteUsersResponseDTO deletedId(Long userId){
-        usersRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado."));
+        usersRepository.findById(userId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado."));
         usersRepository.deleteById(userId);
 
         return DeleteUsersResponseDTO.builder()
