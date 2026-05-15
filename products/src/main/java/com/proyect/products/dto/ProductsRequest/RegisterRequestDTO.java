@@ -2,6 +2,8 @@ package com.proyect.products.dto.ProductsRequest;
 
 import com.proyect.products.enums.Rol;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
@@ -14,5 +16,7 @@ public class RegisterRequestDTO {
     private String email;
     private String password;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
     private Rol rol;
 }

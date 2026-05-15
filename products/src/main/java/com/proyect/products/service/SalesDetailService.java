@@ -4,7 +4,9 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.proyect.products.entity.Products;
 import com.proyect.products.entity.Sales;
@@ -32,21 +34,24 @@ public class SalesDetailService {
     public SalesDetail createSalesDetail(Long idSale, Long userId, Long productId, Integer cantidad){
         //Valiida la cantidad
         if (cantidad <= 0) {
-            throw new RuntimeException("La cantidad debe ser mayor a 0");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"La cantidad debe ser mayor a 0");
         }
 
         //Busca el producto
-        Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Producto no encontrado."));
+        Products products = productsRepository.findById(productId)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado."));
 
         if (products.getStock() < cantidad) {
-            throw new RuntimeException("Stock insuficinete.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stock insuficiente.");
         }
 
         //Busca usuario
-        Users user = usersRepository.findById(userId).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+        Users user = usersRepository.findById(userId)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         //Busca venta 
-        Sales sale = saleRepository.findById(idSale).orElseThrow(()-> new RuntimeException("Venta no encontrada"));
+        Sales sale = saleRepository.findById(idSale)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venta no encontrada"));
 
         SalesDetail detail = new SalesDetail();
         detail.setCantidad(cantidad);

@@ -3,7 +3,9 @@ package com.proyect.products.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.proyect.products.dto.ProductsRequest.ProductsRequestDTO;
 import com.proyect.products.dto.ProductsResponseDTO.DeleteProductsDTO;
@@ -28,7 +30,7 @@ public class ProductsService {
     public ProductsResponseDTO createProduct(ProductsRequestDTO request){
 
         if (productsRepository.existsByName(request.getName())) {
-            throw new RuntimeException("El nombre del producto ya existe.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El nombre del producto ya existe, ingresa otro.");
         }
         Products products = new Products();
         
@@ -58,7 +60,9 @@ public class ProductsService {
      * @return
      */
     public ProductsResponseDTO showId(Long productId){
-        Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Usuario no encontrado. "));
+        Products products = productsRepository.findById(productId)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado."));
+
         return toResponse(products);
     }
 
@@ -71,7 +75,8 @@ public class ProductsService {
      * @return
      */
     public ProductsResponseDTO putProducts(Long productId, ProductsRequestDTO request){
-        Products products = productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Usuario no encontrado. "));
+        Products products = productsRepository.findById(productId)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado."));
         
         products.setName(request.getName());
         products.setDescription(request.getDescription());
@@ -90,7 +95,8 @@ public class ProductsService {
      * @param productId
      */
     public DeleteProductsDTO deleteProductId(Long productId){
-        productsRepository.findById(productId).orElseThrow(()-> new RuntimeException("Uusario no encontrado."));
+        productsRepository.findById(productId)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado."));
         productsRepository.deleteById(productId);
         return DeleteProductsDTO.builder()
                 .message("Producto eliminado correctamente.")

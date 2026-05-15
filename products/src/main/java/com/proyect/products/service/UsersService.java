@@ -8,6 +8,7 @@ import com.proyect.products.dto.ProductsRequest.UsersRequestDTO;
 import com.proyect.products.dto.ProductsResponseDTO.DeleteUsersResponseDTO;
 import com.proyect.products.dto.ProductsResponseDTO.UsersResponseDTO;
 import com.proyect.products.entity.Users;
+import com.proyect.products.enums.Rol;
 import com.proyect.products.repository.UsersRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class UsersService {
         users.setEmail(request.getEmail());
         users.setPassword(passwordEncoder.encode(request.getPassword()) );
         users.setPhone(request.getPhone());
-        users.setRol(request.getRol());
+        users.setRol(Rol.valueOf(request.getRol().toString().toUpperCase()));
 
         Users saveUsers = usersRepository.save(users);
 
