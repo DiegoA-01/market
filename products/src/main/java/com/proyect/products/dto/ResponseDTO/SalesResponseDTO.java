@@ -2,6 +2,7 @@ package com.proyect.products.dto.ResponseDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,15 +19,13 @@ public class SalesResponseDTO {
 
     private LocalDateTime fecha;
 
+    private String userName;
+
     private BigDecimal subtotal;
 
     private BigDecimal total;
 
-    private String userName;
-
-    private String userRole;
-
-    private String productName;
-
     private Integer cantidad;
+
+    private List<SalesDetailResponseDTO> detalles;
 }

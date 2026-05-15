@@ -1,19 +1,19 @@
 package com.proyect.products.dto.RequestDTO;
 
 
-
-import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SalesRequestDTO {
+public class ProductQuantityDTO{
+    
+    private Long productId;
 
-    List<ProductQuantityDTO> products;
+    private Integer cantidad;
 }
