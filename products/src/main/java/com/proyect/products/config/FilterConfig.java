@@ -21,7 +21,6 @@ public class FilterConfig {
     public FilterRegistrationBean<JwtValidationFilter> customJwtFilter(JwtValidationFilter filter) {
         FilterRegistrationBean<JwtValidationFilter> registrationBean = new FilterRegistrationBean<>(filter);
         registrationBean.setFilter(filter);
-        // Aplica a todas las subrutas de products (ej. /api/v1/products/secure)
         registrationBean.addUrlPatterns("/products/*", "/users/*", "/sales/*");
         registrationBean.setOrder(1);
         return registrationBean;
