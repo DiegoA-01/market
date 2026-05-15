@@ -1,6 +1,7 @@
 package com.proyect.products.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import com.proyect.products.service.ProductsService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -33,8 +35,10 @@ public class ProductsController {
      * @return
      */
     @PostMapping
-    public ProductsResponseDTO createProduct(@Valid @RequestBody ProductsRequestDTO request){
-        return productsService.createProduct(request);
+    public ResponseEntity<Map<String, Object>> createProduct(@Valid @RequestBody ProductsRequestDTO request){
+
+        Map<String, Object> response = productsService.createProduct(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     /**

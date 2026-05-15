@@ -1,6 +1,8 @@
 package com.proyect.products.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class ProductsService {
      * @param request
      * @return
      */
-    public ProductsResponseDTO createProduct(ProductsRequestDTO request){
+    public Map<String, Object> createProduct(ProductsRequestDTO request){
 
         if (productsRepository.existsByName(request.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El nombre del producto ya existe, ingresa otro.");
@@ -39,9 +41,13 @@ public class ProductsService {
         products.setPrice(request.getPrice());
         products.setStock(request.getStock());
 
-        Products saveProducts = productsRepository.save(products);
+        productsRepository.save(products);
 
-        return toResponse(saveProducts);
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("message", "Producto creado correctamente.");
+
+        return response;
     }
 
     /**

@@ -2,8 +2,10 @@ package com.proyect.products.config;
 
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.proyect.products.dto.ProductsRequest.LoginRequestDTO;
 import com.proyect.products.dto.ProductsRequest.RegisterRequestDTO;
@@ -27,7 +29,7 @@ public class AuthService {
 
         response.setMenssage("Registro exitoso");
         if (usersRepository.findByEmail(register.getEmail()).isPresent()) {
-            throw new RuntimeException("El email ya existe intenta con otro");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"El email ya existe intenta con otro");
         }
         Users users = new Users();
         users.setName(register.getName());
