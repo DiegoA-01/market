@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.proyect.products.dto.RequestDTO.ProductQuantityDTO;
 import com.proyect.products.dto.RequestDTO.SalesRequestDTO;
-import com.proyect.products.dto.ResponseDTO.DeleteDTO;
 import com.proyect.products.dto.ResponseDTO.SalesDetailResponseDTO;
 import com.proyect.products.dto.ResponseDTO.SalesResponseDTO;
 import com.proyect.products.entity.Products;
