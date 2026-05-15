@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import com.proyect.products.repository.UsersRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import com.proyect.products.dto.ResponseDTO.UsersResponseDTO;
+
 
 
 @Service
