@@ -2,7 +2,10 @@ package com.proyect.products.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +34,10 @@ public class Sales {
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private Users users;
+
     @Column(name = "subtotal")
     private BigDecimal subTotal;
 
@@ -39,13 +47,9 @@ public class Sales {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
-    private Users users;
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SalesDetail> detalles = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Products products;
 
 
 }

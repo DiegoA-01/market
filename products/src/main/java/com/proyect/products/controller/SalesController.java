@@ -51,12 +51,6 @@ public class SalesController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponseDTO> deleteSale(
-            @PathVariable Long id,
-            HttpServletRequest httpRequest) {
-        salesService.deletedId(id, httpRequest);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new MessageResponseDTO("Venta eliminada correctamente"));
-    }
+    
 }
 
