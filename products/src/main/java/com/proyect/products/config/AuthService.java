@@ -20,14 +20,28 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
 
-
+    /**
+     * incriptacion de la contraseña.
+     */
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * genera y valida un token.
+     */
     private final JwtService jwtService;
 
+    /**
+     * Maneja las operaciones sobre los usuarios
+     */
     private final UsersRepository userRepository;
 
 
+    /**
+     * Genera un nuevo usuario pero validando si el correo no existe en otro osuario, luego encripta la contraseña y crea el usuario
+     * 
+     * @param request
+     * @return
+     */
     public MessageResponseDTO register(RegisterRequestDTO request){
         MessageResponseDTO response = new MessageResponseDTO();
         response.setMessage("Registration successful");
@@ -48,6 +62,12 @@ public class AuthService {
     return response;
 }
 
+/**
+ * verifica que el email y la contraseña sean validas para generar el token
+ * 
+ * @param request
+ * @return
+ */
 public LoginResponseDTO login(LoginRequestDTO request){
     LoginResponseDTO response = new LoginResponseDTO();
     Optional<Users> userOpt = userRepository.findByEmail(request.getEmail());
@@ -71,6 +91,13 @@ public LoginResponseDTO login(LoginRequestDTO request){
 
 }
 
+/**
+ * genera un nuevo token con un token valido ya existente
+ * 
+ * @param token
+ * @return
+ * @throws Exception
+ */
 public RefreshTokenResponseDTO refreshToken(String token)throws Exception{
     
     String jwt = jwtService.refreshToken(token);

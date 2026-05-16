@@ -8,7 +8,12 @@ import com.proyect.products.filter.JwtValidationFilter;
 @Configuration
 public class FilterConfig {
 
-    
+    /**
+     * este metodo omite el registro automatico de los componentes de Springboot y asi poder configurar las rutas protegidas manualmente.
+     * 
+     * @param filter
+     * @return
+     */
     @Bean
     public FilterRegistrationBean<JwtValidationFilter> disableDefaultRegistration(JwtValidationFilter filter) {
         FilterRegistrationBean<JwtValidationFilter> registrationBean = new FilterRegistrationBean<>(filter);
@@ -16,7 +21,12 @@ public class FilterConfig {
         return registrationBean;
     }
 
-    
+    /**
+     * valida los token antes de permitirle el acceso a laas rutas protegidas 
+     * 
+     * @param filter
+     * @return
+     */
     @Bean
     public FilterRegistrationBean<JwtValidationFilter> customJwtFilter(JwtValidationFilter filter) {
         FilterRegistrationBean<JwtValidationFilter> registrationBean = new FilterRegistrationBean<>(filter);
