@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{ulr}}sales"
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "date": "2024-01-10T10:00:00",
+        "finalPrice": 150.00,
+        "userId": 1
+    }
+order: 2627957351815860

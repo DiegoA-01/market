@@ -25,7 +25,7 @@ public class ProductsService {
      */
     public ProductsResponseDTO createProduct(ProductsRequestDTO request){
 
-        if (productsRepository.exiexistsByName(request.getName())) {
+        if (productsRepository.existsByName(request.getName())) {
             throw new RuntimeException("El nombre del producto ya existe.");
         }
         Products products = new Products();

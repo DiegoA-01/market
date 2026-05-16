@@ -3,7 +3,7 @@ spring:
     name: products
 
   datasource:
-    url: jdbc:mysql://localhost:3306/products
+    url: jdbc:mysql://localhost:3306/market
     username: root
     password: abby2025
     driver-class-name: com.mysql.cj.jdbc.Driver

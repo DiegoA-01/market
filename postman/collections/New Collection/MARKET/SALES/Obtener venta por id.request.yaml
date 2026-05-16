@@ -1,0 +1,5 @@
+$kind: http-request
+name: Obtener venta por id
+url: http://localhost:9090/api/v1/sales/1
+method: GET
+order: 3441346120382702

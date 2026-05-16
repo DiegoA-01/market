@@ -1,0 +1,5 @@
+$kind: http-request
+name: Eliminar venta
+url: http://localhost:9090/api/v1/sales/1
+method: GET
+order: 4339441656333087

@@ -1,0 +1,5 @@
+$kind: http-request
+name: Obtener todas la ventas
+url: http://localhost:9090/api/v1/sales
+method: GET
+order: 1778818331980

@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SalesService {
 
-    SalesRepository salesRepository;
-    UserRepository usersRepository;
+    private final SalesRepository salesRepository;
+    private final UserRepository usersRepository;
 
     /**
      * Metodo para crear una venta
@@ -84,7 +84,7 @@ public class SalesService {
      */
     public void deleteSaleId(Long saleId) {
         Sales sales = salesRepository.findById(saleId)
-                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+            .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
         salesRepository.delete(sales);
     }
 
