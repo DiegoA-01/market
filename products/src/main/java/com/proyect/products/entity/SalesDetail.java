@@ -26,6 +26,9 @@ public class SalesDetail {
     @Column(name = "id_sale_detail")
     private Long salesDetailId;
 
+    /**
+     * Relación ManyToOne con la entidad Sales, cada detalle de venta pertenece a una venta específica.
+     */
     @ManyToOne
     @JoinColumn(name = "id_sale", nullable = false)
     private Sales sale;
@@ -34,7 +37,7 @@ public class SalesDetail {
     @JoinColumn(name = "product_id", nullable = false)
     private Products product;
 
-    @Column( name = " cantidad", nullable = false)
+    @Column( name = "cantidad", nullable = false)
     private Integer cantidad;
 
     @Column( name = "precio_unitario", nullable = false)
