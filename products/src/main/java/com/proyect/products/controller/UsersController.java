@@ -36,7 +36,13 @@ public class UsersController {
     private final PermissionService permissionService;
 
 
-
+    /**
+     * crea usuario, Solo el ADMIN puede registrar nuevos usuarios 
+     * 
+     * @param request
+     * @param httpServletRequest
+     * @return
+     */
     @PostMapping("/secure")
 public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request,
                                     HttpServletRequest httpServletRequest) {
@@ -49,6 +55,12 @@ public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request,
 }
 
 
+    /**
+     * para listar usuarios, permitido para  ADMIN y CASHIER
+     * 
+     * @param httpServletRequest
+     * @return
+     */
     @GetMapping
     public List<UsersResponseDTO> listUsers(HttpServletRequest httpServletRequest){
         String rol = (String) httpServletRequest.getAttribute("rol");
@@ -56,6 +68,13 @@ public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request,
         return usersService.listUsers();
     }
 
+    /**
+     * busca usuario por Id
+     * 
+     * @param userId
+     * @param httpServletRequest
+     * @return
+     */
     @GetMapping("/{userId}")
     public UsersResponseDTO showId(@Valid @PathVariable Long  userId,HttpServletRequest httpServletRequest){
         String rol = (String) httpServletRequest.getAttribute("rol");
@@ -64,6 +83,14 @@ public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request,
         return usersService.showId(userId);
     }
 
+    /**
+     * para actualizar usuarios, solo ADMIN
+     * 
+     * @param userId
+     * @param request
+     * @param httpServletRequest
+     * @return
+     */
     @PutMapping("/{userId}")
     public ResponseEntity <?> updatedId(@PathVariable Long userId, @Valid @RequestBody UsersRequestDTO request,HttpServletRequest httpServletRequest){
         String rol = (String) httpServletRequest.getAttribute("rol");
@@ -72,6 +99,14 @@ public ResponseEntity<?> createUser(@Valid @RequestBody UsersRequestDTO request,
     return ResponseEntity.ok(updated);
     }
 
+    /**
+     * para eliminar usuarios, solo ADMIN
+     * 
+     * @param userId
+     * @param usersRequestDTO
+     * @param httpServletRequest
+     * @return
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteId(@PathVariable Long userId,@Valid @RequestBody UsersRequestDTO usersRequestDTO,HttpServletRequest httpServletRequest){
         String rol = (String) httpServletRequest.getAttribute("rol");
