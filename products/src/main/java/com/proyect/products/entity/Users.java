@@ -62,10 +62,7 @@ public class Users {
     @Column(name = "phone", unique = true)
     private String phone;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Rol rol;
-
-
 }

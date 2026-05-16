@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SalesRequestDTO {
-
+    /**
+     * Lista los productos con sus respectivas cantidades para realizar una venta. 
+     */
     List<ProductQuantityDTO> products;
 }

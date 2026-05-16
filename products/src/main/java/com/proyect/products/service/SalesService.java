@@ -39,7 +39,13 @@ public class SalesService {
     ProductsRepository productsRepository;
 
 
-
+    /**
+     * Metodo para crear una venta
+     * 
+     * @param request
+     * @param httpServletRequest
+     * @return
+     */
     public SalesResponseDTO createSale(SalesRequestDTO request, HttpServletRequest httpServletRequest){
 
 
@@ -60,7 +66,13 @@ public class SalesService {
 
         Sales sales = new Sales();
 
-
+        /**
+         * Recorre la lista de productos en la solicitud
+         * verifica el stock
+         * actualiza el stock 
+         * calcula el subtotal y total 
+         * crea los detalles de la venta.
+         */
         for(ProductQuantityDTO pq : request.getProducts()){
 
             Products product = productsRepository.findById(pq.getProductId()).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -70,28 +82,27 @@ public class SalesService {
             }
 
             product.setStock(product.getStock() - pq.getCantidad());
-        productsRepository.save(product);
+            productsRepository.save(product);
 
-        BigDecimal sub = product.getPrice().multiply(BigDecimal.valueOf(pq.getCantidad()));
+            BigDecimal sub = product.getPrice().multiply(BigDecimal.valueOf(pq.getCantidad()));
 
-        subTotal = subTotal.add(sub);
-        cantidadTotal += pq.getCantidad();
+            subTotal = subTotal.add(sub);
+            cantidadTotal += pq.getCantidad();
 
-        SalesDetail detail = new SalesDetail();
-        detail.setSale(sales);
-        detail.setProduct(product);
-        detail.setCantidad(pq.getCantidad());
-        detail.setPrecioUnitario(product.getPrice());
-        detail.setSubtotal(sub);
+            SalesDetail detail = new SalesDetail();
+            detail.setSale(sales);
+            detail.setProduct(product);
+            detail.setCantidad(pq.getCantidad());
+            detail.setPrecioUnitario(product.getPrice());
+            detail.setSubtotal(sub);
 
-        detalles.add(detail);
+            detalles.add(detail);
 
         }
 
-        
+        // Calcular el total con un impuesto del 21%
         BigDecimal total = subTotal.multiply(BigDecimal.valueOf(1.21));
 
-        
 
         sales.setUsers(users);
         sales.setSubTotal(subTotal);
@@ -108,6 +119,12 @@ public class SalesService {
         return toResponse(saveSale, rol);
     }
 
+    /**
+     * Metodo para obtener todas las ventas registradas
+     * 
+     * @param httpServletRequest
+     * @return
+     */
     public List<SalesResponseDTO> getAllSales(HttpServletRequest httpServletRequest){
         String rol = (String) httpServletRequest.getAttribute("rol");
         permissionService.checkAdminOrCashier(rol);
@@ -118,7 +135,13 @@ public class SalesService {
                 .toList();
     }
 
-
+    /**
+     * Metodo para obtener una venta por ID
+     * 
+     * @param id
+     * @param httpServletRequest
+     * @return
+     */
     public SalesResponseDTO getSaleById(Long id,HttpServletRequest httpServletRequest){
 
         String rol = (String) httpServletRequest.getAttribute("rol");
@@ -132,9 +155,6 @@ public class SalesService {
 
         return toResponse(sales,rol);
     }
-
-    
-
 
     public SalesResponseDTO toResponse(Sales sales, String rol){
 
