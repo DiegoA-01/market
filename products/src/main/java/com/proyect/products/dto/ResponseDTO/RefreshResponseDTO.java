@@ -1,0 +1,13 @@
+package com.proyect.products.dto.ResponseDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RefreshResponseDTO {
+    private String jwt;
+    private String message;
+}
