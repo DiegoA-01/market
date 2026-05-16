@@ -1,5 +1,6 @@
 package com.proyect.products.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +26,30 @@ public class ProductsService {
      * @param request
      * @return
      */
-    public ProductsResponseDTO createProduct(ProductsRequestDTO request){
+    public List<ProductsResponseDTO> createProduct(List<ProductsRequestDTO> request){
 
-        if (productsRepository.existsByName(request.getName())) {
-            throw new RuntimeException("El nombre del producto ya existe.");
+        List<Products> productsList = new ArrayList<>();
+
+        for (ProductsRequestDTO request1 : request) {
+
+        // Validar nombre repetido
+        if (productsRepository.existsByName(request1.getName())) {
+            throw new RuntimeException(
+                    "El producto " + request1.getName() + " ya existe."
+            );
         }
         Products products = new Products();
         
-        products.setName(request.getName());
-        products.setDescription(request.getDescription());
-        products.setPrice(request.getPrice());
-        products.setStock(request.getStock());
+        products.setName(request1.getName());
+        products.setDescription(request1.getDescription());
+        products.setPrice(request1.getPrice());
+        products.setStock(request1.getStock());
 
         Products saveProducts = productsRepository.save(products);
 
-        return toResponse(saveProducts);
+        productsList.add(saveProducts);
+    }
+    return productsList.stream().map(this::toResponse).toList();
     }
 
     /**

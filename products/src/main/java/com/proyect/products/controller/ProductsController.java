@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyect.products.dto.RequestDTO.ProductsRequestDTO;
 import com.proyect.products.dto.ResponseDTO.DeleteProductsDTO;
-import com.proyect.products.dto.ResponseDTO.MessageResponseDTO;
+
 import com.proyect.products.dto.ResponseDTO.ProductsResponseDTO;
 import com.proyect.products.service.PermissionService;
 import com.proyect.products.service.ProductsService;
@@ -35,12 +35,14 @@ public class ProductsController {
 
 
     @PostMapping("/secure")
-    public ResponseEntity<?> createProduct(HttpServletRequest request, @RequestBody ProductsRequestDTO productsRequestDTO){
+    public ResponseEntity<?> createProduct(HttpServletRequest request, @RequestBody List<ProductsRequestDTO> productsRequestDTO){
         String rol = (String) request.getAttribute("rol");
         permissionService.checkAdmin(rol);
 
-        productsService.createProduct(productsRequestDTO);
-        return ResponseEntity.ok(new MessageResponseDTO("Producto creado"));
+        List<ProductsResponseDTO> response =
+            productsService.createProduct(productsRequestDTO);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
