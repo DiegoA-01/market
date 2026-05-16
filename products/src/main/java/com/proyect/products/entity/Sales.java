@@ -47,9 +47,12 @@ public class Sales {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
+    /**
+     * cascade = ALL - guarda automáticamente los detalles de la venta al guardar la venta principal
+     * 
+     * orphanRemoval = true - Si un detalle se quita de la lista, se borra de la base de datos 
+     */
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SalesDetail> detalles = new ArrayList<>();
-
-
 
 }

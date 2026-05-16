@@ -32,6 +32,13 @@ public class SalesController {
 
     private final SalesService salesService;
 
+    /**
+     * Registra una venta
+     * 
+     * @param request
+     * @param httpRequest
+     * @return
+     */
     @PostMapping
     public ResponseEntity<MessageResponseDTO> createSale(@RequestBody SalesRequestDTO request, HttpServletRequest httpRequest) {
         salesService.createSale(request, httpRequest);
@@ -39,12 +46,25 @@ public class SalesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponseDTO("venta exitosa"));
     }
 
+    /**
+     * lista todas las ventas
+     * 
+     * @param httpRequest
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<SalesResponseDTO>> getAllSales(HttpServletRequest httpRequest) {
         List<SalesResponseDTO> response = salesService.getAllSales(httpRequest);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * consulta venta por Id
+     * 
+     * @param id
+     * @param httpRequest
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<SalesResponseDTO> getSaleById(@PathVariable Long id, HttpServletRequest httpRequest) {
         SalesResponseDTO response = salesService.getSaleById(id, httpRequest);

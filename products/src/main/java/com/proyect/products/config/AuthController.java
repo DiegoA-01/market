@@ -28,6 +28,12 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * Este endpoint registra nuevos usuarios validando la informacion recibida
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping("/register")
 public ResponseEntity<MessageResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
     MessageResponseDTO response = authService.register(request);
@@ -35,6 +41,12 @@ public ResponseEntity<MessageResponseDTO> register(@Valid @RequestBody RegisterR
 }
 
 
+    /**
+     * Este endpoint inicia sesion y valida las credenciales del usuario creando un token de autenticacion
+     * 
+     * @param request
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
         try {
@@ -47,6 +59,12 @@ public ResponseEntity<MessageResponseDTO> register(@Valid @RequestBody RegisterR
 
     }
     
+    /**
+     * Este endpoint recibe el token inicial y genera un nuevo token valido.
+     * 
+     * @param request
+     * @return
+     */
     @GetMapping("/refresh")
     public ResponseEntity<RefreshTokenResponseDTO> refreshToken(HttpServletRequest request){
         String autHeader = request.getHeader("Authorization");

@@ -31,9 +31,20 @@ import org.springframework.http.ResponseEntity;
 public class ProductsController {
     @Autowired
     ProductsService productsService;
+
+    /**
+     * valida los permisos segun el rol
+     */
     private final PermissionService permissionService;
 
 
+    /**
+     * endpoint para crear productos. solo el ADMIN tiene este permiso 
+     * 
+     * @param request
+     * @param productsRequestDTO
+     * @return
+     */
     @PostMapping("/secure")
     public ResponseEntity<?> createProduct(HttpServletRequest request, @RequestBody List<ProductsRequestDTO> productsRequestDTO){
         String rol = (String) request.getAttribute("rol");
@@ -45,6 +56,12 @@ public class ProductsController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Endpoint para listar productos, permitido para ADMIN y CaASHIER
+     * 
+     * @param httpRequest
+     * @return
+     */
     @GetMapping
     public List<ProductsResponseDTO> listProducts(HttpServletRequest httpRequest){
         String rol =(String) httpRequest.getAttribute ("rol");
@@ -52,6 +69,13 @@ public class ProductsController {
         return productsService.listProducts();
     }
 
+    /**
+     * Endpoint para buscar producto por Id, permitido para ADMIN y CaASHIER
+     * 
+     * @param productId
+     * @param httpRequest
+     * @return
+     */
     @GetMapping("/{productId}")
     public ProductsResponseDTO showId(@Valid @PathVariable Long productId,HttpServletRequest httpRequest){
         String rol = (String) httpRequest.getAttribute("rol");
@@ -59,6 +83,14 @@ public class ProductsController {
         return productsService.showId(productId);
     }
 
+    /**
+     * endpoint para actualizar productos, solo ADMIN
+     * 
+     * @param id
+     * @param request
+     * @param httpRequest
+     * @return
+     */
     @PutMapping("/update")
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductsRequestDTO request,HttpServletRequest httpRequest){
 
@@ -69,6 +101,14 @@ public class ProductsController {
     return ResponseEntity.ok(updated);
     }
 
+    /**
+     * Endpoint para eliminar productos, solo ADMIN
+     * 
+     * @param productId
+     * @param productsRequestDTO
+     * @param httpsRequest
+     * @return
+     */
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long productId, @Valid @RequestBody ProductsRequestDTO productsRequestDTO,HttpServletRequest httpsRequest){
         String rol = (String) httpsRequest.getAttribute("rol");
